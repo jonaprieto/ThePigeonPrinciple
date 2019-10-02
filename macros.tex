@@ -1,0 +1,181 @@
+
+% ================================================================
+
+\usepackage{fontspec,xltxtra,xunicode}
+\usepackage[warnings-off={mathtools-colon,%
+                          mathtools-overbracket}
+            ]{unicode-math}
+\defaultfontfeatures{Ligatures=TeX}
+\setmonofont[Mapping=tex-text]{PragmataPro Mono}
+
+% ================================================================
+\usepackage{graphicx,overpic}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{obj1}{rgb}{.88,, .93,, .96}
+\definecolor{obj2}{rgb}{.62,, .74,, .85}
+\definecolor{obj3}{rgb}{.53,, .34, .65}
+\definecolor{obj4}{rgb}{.74,, .74, .74}
+
+\newcommand\myshade{85}
+\colorlet{mylinkcolor}{violet}
+\colorlet{mycitecolor}{YellowOrange}
+\colorlet{myurlcolor}{Aquamarine}
+
+\definecolor{refkey}{gray}{.75}
+\definecolor{labelkey}{gray}{.75}
+% ================================================================
+
+\usepackage{adjustbox}
+
+\newenvironment{shade}{%
+%
+\vskip 0.1\baselineskip%
+\begin{adjustbox}{%
+minipage=\linewidth,margin=0pt,padding=0pt,bgcolor=obj1%
+}}{%
+\end{adjustbox}%
+\vskip 0.1\baselineskip%
+%
+}
+% ================================================================
+\usepackage{graphicx}
+\graphicspath{{./../docs/ipe-images/}}
+
+\usepackage[color=obj1]{todonotes}
+\usepackage{wrapfig}
+
+\usepackage{url}
+
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage[yyyymmdd,hhmmss]{datetime}
+
+% =================================================================
+
+\usepackage{amsmath, amsfonts, textcomp, mathtools, xparse}
+% \usepackage{stmaryrd}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+
+\declaretheoremstyle[headfont=\normalfont\bfseries,bodyfont=\normalfont]{p-thm}
+\declaretheoremstyle[headfont=\normalfont\bfseries]{p-def}
+
+\declaretheorem[parent=section,style=p-thm]{theorem}
+\declaretheorem[sibling=theorem,style=p-thm]{lemma}
+\declaretheorem[sibling=theorem,style=p-thm]{proposition}
+\declaretheorem[sibling=theorem,style=p-thm]{corollary}
+\declaretheorem[sibling=theorem,style=p-thm]{conjecture}
+\declaretheorem[sibling=theorem,style=p-thm]{axiom}
+\declaretheorem[sibling=theorem,style=p-thm]{construction}
+\declaretheorem[sibling=theorem,style=p-thm]{definition}
+\declaretheorem[sibling=theorem,style=p-thm]{remark}
+\declaretheorem[sibling=theorem,style=p-thm]{example}
+\declaretheorem[sibling=theorem,style=p-thm]{exercise}
+
+\let\oldproofname=\proofname
+\renewcommand{\proofname}{\rm\bf{\oldproofname}}
+
+\numberwithin{equation}{section}
+
+\usepackage[all]{xy}
+\usepackage{pgfplots,tikz, tikz-cd}
+\pgfplotsset{compat=newest,compat/show suggested version=false}
+\usetikzlibrary{decorations.markings,
+decorations.pathreplacing,
+matrix,
+arrows,
+chains,
+positioning,scopes}
+
+% ================================================================
+% MACROS
+
+\newcommand{\Agda}[0]{\textsf{Agda}}
+\newcommand{\Aut}{\mathsf{Aut}}
+\newcommand{\A}{\ensuremath{\texttt{A}}}
+\newcommand{\Cn}{\ensuremath{\texttt{C}_{n}}}
+\newcommand{\CombinatorialMap}{\ensuremath{\texttt{Map}}}
+\newcommand{\CyclicGraph}{\ensuremath{\texttt{CyclicGraph}}}
+\newcommand{\CyclicOrder}{\ensuremath{\texttt{CyclicOrder}}}
+\newcommand{\DNE}{\ensuremath{\operatorname{DNE}}}
+\newcommand{\EdgeIsProp}{\ensuremath{\mathsf{Edge-is-prop}}}
+\newcommand{\Edge}{\ensuremath{\texttt{E}}}
+\newcommand{\Embedding}{\ensuremath{\texttt{Embedding}}}
+\newcommand{\Empty}{\mathbf{0}}
+\newcommand{\Face}{\ensuremath{\texttt{Face}}}
+\newcommand{\Fin}[1]{\ensuremath{\mathsf{Fin}_{#1}}}
+\newcommand{\Graph}{\ensuremath{\texttt{Graph}}}
+\newcommand{\IsUndirected}{\ensuremath{\texttt{Undirected}}}
+\newcommand{\IsSimple}{\ensuremath{\texttt{IsSimple}}}
+\newcommand{\HoTT}[0]{\textsf{HoTT}}
+\newcommand{\Hom}[2]{\ensuremath{\mathsf{Hom}({#1},{#2})}}
+\newcommand{\IsoHom}[1]{\ensuremath{\mathsf{IsoHom}\,{#1}}}
+\newcommand{\Iso}[2]{\ensuremath{#1\simeq_{\texttt{Iso}}#2}}
+\newcommand{\LEM}{\ensuremath{\operatorname{LEM}}}
+\newcommand{\NodeIsSet}{\ensuremath{\mathsf{NodeIsSet}}}
+\newcommand{\Node}{\ensuremath{\texttt{N}}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\PathOver}{\operatorname{PathOver}}
+\newcommand{\Path}{\ensuremath{\mathsf{Path}}}
+\newcommand{\Planar}{\texttt{Planar}}
+\newcommand{\Rotation}{\texttt{Rotation}}
+\newcommand{\RS}{\ensuremath{\mathsf{R}}}
+\newcommand{\R}{\ensuremath{\texttt{R}}}
+\newcommand{\Set}{\operatorname{Set}}
+\newcommand{\Spherical}{\ensuremath{\texttt{Spherical}}}
+\newcommand{\Star}{\ensuremath{\mathtt{Star}}}
+\newcommand{\hSet}{\ensuremath{\mathsf{hSet}}}
+\newcommand{\hProp}{\ensuremath{\mathsf{hProp}}}
+\newcommand{\Type}{\ensuremath{\mathsf{Type}}}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\VV}{\mathcal{V}}
+\newcommand{\Walk}{\ensuremath{\texttt{Walk}}}
+\newcommand{\ap}{\operatorname{ap}}
+\newcommand{\bool}{\mathbf{2}}
+\newcommand{\bracket}[1]{\left( #1 \right)}
+\newcommand{\coe}{\operatorname{coe}}
+\newcommand{\comp}{\mathrel{\circ}}
+\newcommand{\false}{\operatorname{false}}
+\newcommand{\flip}{\operatorname{flip}}
+\newcommand{\fun}{\operatorname{fun}}
+\newcommand{\idfunc}[1][]{\operatorname{id}_{#1}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\ind}{\operatorname{ind}}
+\newcommand{\inl}{{\operatorname{inl}}}
+\newcommand{\inr}{{\operatorname{inr}}}
+\newcommand{\isContr}[1]{\ensuremath{\mathsf{isContr}(#1)}}
+\newcommand{\isPlanar}{\operatorname{isPlanar}}
+\newcommand{\isProp}[1]{\ensuremath{\mathsf{isProp}(#1)}}
+\newcommand{\isSet}[1]{\ensuremath{\mathsf{isSet}(#1)}}
+\newcommand{\pr}{\operatorname{pr}}
+\newcommand{\rec}{\operatorname{rec}}
+\newcommand{\refl}{\operatorname{refl}}
+\newcommand{\sym}{\operatorname{sym}}
+\newcommand{\transport}{\operatorname{trans}}
+\newcommand{\trdos}[5]{\ensuremath{\mathsf{tr}_{2}^{#1,#2}(#3,#4,#5)}}
+\newcommand{\true}{\operatorname{true}}
+\newcommand{\trunc}[1]{\left\|\,#1\,\right\|}
+\newcommand{\tr}[3]{\ensuremath{\mathsf{tr}^{#1}(#2,#3)}}
+\newcommand{\ttt}{\star}
+\newcommand{\unit}{\mathbf{1}}
+\renewcommand{\equiv}{\simeq}
+
+\usepackage[
+  unicode=true,
+  bookmarks=true,
+  % %
+  linkcolor  = mylinkcolor!\myshade!black,
+  citecolor  = obj4,
+  urlcolor   = myurlcolor!\myshade!black,
+  colorlinks = true,
+  % %
+  pdftitle={Univalent Graphs},
+  pdfauthor={Jonathan Prieto-Cubides and Håkon Robbestad Gylterud},
+  breaklinks=true,
+  pdfencoding=auto
+  ]{hyperref}
+
+\usepackage[capitalize]{cleveref}
+
+% ================================================================
