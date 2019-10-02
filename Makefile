@@ -1,22 +1,11 @@
 
-ipeImages    := $(wildcard ./../docs/ipe-images/*.ipe)
-ipeImagesPNG := $(subst ./../docs/ipe-images/,./../docs/ipe-images/,$(subst .ipe,.png,$(ipeImages)))
-
-all: $(ipeImagesPNG)
-	@agda --latex --allow-unsolved-metas GTheory.lagda &&\
-	 latexmk -pdf -xelatex latex/GTheory.tex
-
-palomar :
+all:
 	@agda --latex --allow-unsolved-metas PigeonPrincipleInUTT.lagda &&\
 	 latexmk -pdf -xelatex latex/PigeonPrincipleInUTT.tex
 
-
-../docs/ipe-images/%.png: ../docs/ipe-images/%.ipe
-	iperender -png -resolution 400 $< $@
-
 clean:
-	- @latexmk -c latex/GTheory.tex
-	- @latexmk -c GTheory.lagda
+	- @latexmk -c latex/PigeonPrincipleInUTT.tex
+	- @latexmk -c PigeonPrincipleInUTT.lagda
 	- @rm -f *.nav
 	- @rm -f *.out
 	- @rm -f *.blg
