@@ -314,6 +314,8 @@ aforementioned equivalence. \end{proof}
                    (∘-injectives-is-injective _ h-is-inj  _ (π₁ $ inv-e-is-bijection _ _))
 \end{code}
 
+\section{Proof of \Cref{pigeon-theorem} and other results. }
+
 \begin{proof}[Proof of \Cref{pigeon-theorem}]\label{proof-pigeon-theorem}
 
 \begin{code}[hide]
@@ -377,6 +379,20 @@ The \Agda\ term for this proof is the following.
         (∘-injectives-is-injective _ h-is-inj  _ (π₁ $ inv-e-is-bijection _ _))
 \end{code}
 \end{proof}
+
+\begin{corollary}
+For any $n, m : ℕ$, if $[n] \simeq [m]$ then $n ≡ m$.
+\end{corollary}
+
+\begin{proof}
+By decidebility of natural numbers, we get an answer whether $n$ is equal to $m$ or not. If so, we are done. Otherwise, given the equivalence, $e : [n] ≃ [m]$, we consider the underlined function $f : [n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$ or $m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not injective when it really is ($f$ is an equivalence). Therefore, from this absurd, the theorem follows.
+A similar argument is used when $m >n$ with the function $g$.
+\end{proof}
+
+
+\begin{corollary}[Corollary 2.15.7 in \cite{symmetrybook}]
+For any $n,m : ℕ$, if $m < n$ then $\sum_{k : ℕ}\, k < m \not \eq \sum_{k : ℕ}\, k < n$.
+\end{corollary}
 
 \bibliographystyle{plain}
 
