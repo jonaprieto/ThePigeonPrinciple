@@ -1,10 +1,10 @@
 \documentclass[11pt, a4paper, oneside]{amsart}
 
 \title{The Pigeonhole Principle}
+\date{Last updated : \today}
 \author{Jonathan Prieto-Cubides}
 
 \input{macros.tex}
-% \usepackage[notref,notcite,color]{showkeys}
 \usepackage{latex/agda}
 
 \begin{document}
@@ -77,8 +77,10 @@ open import MiniHoTT
 \end{code}
 
 \begin{code}[hide]
+  hiding (⟦_⟧)
 module _ {ℓ : Level} where
-  open Fin2 ℓ
+  open ℕ-ordering ℓ
+  ⟦_⟧ = ⟦_⟧₂ {ℓ}
 \end{code}
 
 \subsection{Types}
@@ -92,7 +94,7 @@ set $[n]$ without a point $x$, i.e., $[n] - \{ x\}$. The finite set of $n$
 elements in \texttt{Agda} is denoted by \texttt{⟦ n ⟧}. We are using for
 finite sets the definition that says $[n + 1] :\equiv 𝟙 + [n]$ and $[0]
 :\equiv 𝟘$. Propositional equality is denoted by ($\equiv$) instead of $(=)$.
-The type $ℕ$ for natural numbers has two constructors \texttt{zr}, and
+The type $ℕ$ for natural numbers has two constructors \texttt{zero}, and
 \texttt{succ}. The coproduct of types $A$ and $B$ is denoted by $A+B$ and it
 has two introduction rules named \texttt{inr}, and \texttt{inl}. We use the
 direct composition of functions also called \emph{diagramatic} composition,
@@ -104,18 +106,21 @@ A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
 \end{equation}
 
 \begin{code}[hide]
-  _\\_  : ∀ {ℓ : Level} → (A : Type ℓ) (x : A) → Type ℓ
-  _\\_  {ℓ} A x  = ∑ A (λ a → ((a ≡ x) → ⊥ ℓ))
+  _─_  : ∀ {ℓ : Level} → (A : Type ℓ) (x : A) → Type ℓ
+  _─_  {ℓ} A x  = ∑ A (λ a → ((a ≡ x) → ⊥ ℓ))
 \end{code}
 
 \section{A proof of \Cref{pigeon-theorem}}
 
 We first need to show there exists an equivalence between two (finite) types
-that differs only by one point. So we define the following (recursive) functions \texttt{e→} and \texttt{e←}.
+that differs only by one point. So we define the following (recursive)
+functions \texttt{e→} and \texttt{e←}.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{removing-one-point-from-finite-set.pdf}
-\caption{Construction of the equivalence $e$ in (\Cref{equivalence-e}).  The directions of the arrows (forward and backward) correspond to the functions in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
+\caption{Construction of the equivalence $e$ in (\Cref{equivalence-e}).
+The directions of the arrows (forward and backward) correspond to the functions
+in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \end{figure}
 
 \begin{definition}\label{definition-e-fun}
@@ -123,7 +128,7 @@ that differs only by one point. So we define the following (recursive) functions
 \begin{code}
   e→ : ∀ (n : ℕ) → (x : ⟦ succ n ⟧)
      --------------------------
-     → ⟦ n ⟧ → ((⟦ succ n ⟧) \\ (x))
+     → ⟦ n ⟧ → ⟦ succ n ⟧ ─ x
 \end{code}
 
 \begin{code}
@@ -139,14 +144,14 @@ that differs only by one point. So we define the following (recursive) functions
 \begin{code}
   e← : ∀ (n : ℕ) → (x : ⟦ succ n ⟧)
       --------------------------
-     → (⟦ succ n ⟧ \\ x) → ⟦ n ⟧
+     → (⟦ succ n ⟧ ─ x) → ⟦ n ⟧
 \end{code}
 
 \begin{code}
-  e← zr (inl ∗) (inl ∗ , b)        = b (ap inl idp)
+  e← 0 (inl ∗) (inl ∗ , b) = b (ap inl idp)
   e← (succ n) (inl x) (inl x₁ , b) = inl _
-  e← n (inl x) (inr y , b)         = y
-  e← (succ zr) (inr x) (inl x₁ , π₄)       = x
+  e← n (inl x) (inr y , b)  = y
+  e← (succ 0) (inr x) (inl x₁ , π₄) = x
   e← (succ (succ n)) (inr x) (inl x₁ , π₄) = inl ∗
   e← (succ n) (inr x) (inr y , π₄)
     = inr (e← n x (y , (π₄ ∘  (ap inr ))))
@@ -157,7 +162,7 @@ that differs only by one point. So we define the following (recursive) functions
       → e← (succ n) (inr x) (inr y , π₄)
       ≡ inr (e← n x (y , (π₄ ∘  (ap (inr {A = 𝟙 ℓ}{𝟙 ℓ + ⟦ n ⟧}) ))))
 
-  DEF-g {zr} {inl ∗} {inl ∗} {π₄} = idp
+  DEF-g {0} {inl ∗} {inl ∗} {π₄} = idp
   DEF-g {succ n} {inl ∗} {inl ∗} {π₄} = idp
   DEF-g {succ n} {inl x} {inr x₁} {π₄} = idp
   DEF-g {succ n} {inr x} {inl x₁} {π₄} = idp
@@ -182,7 +187,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
   e
     : ∀ (n : ℕ) → (x : ⟦ succ n ⟧)
     --------------------------
-    → ⟦ n ⟧ ≃ (⟦ succ n ⟧ \\ x)
+    → ⟦ n ⟧ ≃ (⟦ succ n ⟧ ─ x)
 
   e n x = quasiinverse-to-≃ (e→ n x) ((e← n x ) , (e←:>e→ n x , e→:>e← n x))
     where
@@ -195,10 +200,10 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \end{code}
 
 \begin{code}[hide]
-    e←:>e→ zr (inl ∗) (inl ∗ , π₄) = ⊥-elim $ π₄ (ap inl idp)
+    e←:>e→ 0 (inl ∗) (inl ∗ , π₄) = ⊥-elim $ π₄ (ap inl idp)
     e←:>e→ (succ n) (inl x) (inl x₁ , π₄) = ⊥-elim (π₄ (ap inl idp))
     e←:>e→ (succ n) (inl x) (inr x₁ , π₄) = pair= (idp , pi-is-prop (λ a x ()) (λ ()) π₄)
-    e←:>e→ (succ zr) (inr (inl x)) (inl ∗ , π₄) = pair= (idp , pi-is-prop (λ a x ()) (λ ()) π₄)
+    e←:>e→ (succ 0) (inr (inl x)) (inl ∗ , π₄) = pair= (idp , pi-is-prop (λ a x ()) (λ ()) π₄)
     e←:>e→ (succ (succ n)) (inr x) (inl ∗ , π₄) = pair= (idp , pi-is-prop (λ a x ()) (λ ()) π₄)
     e←:>e→ (succ n) (inr x) (inr y , π₄)  = pair= (ooo , pi-is-prop (λ a x ()) _ π₄)
       where
@@ -229,7 +234,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \begin{code}[hide]
     e→:>e← (succ n) (inl x) (inl x₁) = idp
     e→:>e← (succ n) (inl x) (inr x₁) = idp
-    e→:>e← (succ zr) (inr (inl ∗)) (inl ∗) = idp
+    e→:>e← (succ 0) (inr (inl ∗)) (inl ∗) = idp
     e→:>e← (succ (succ n)) (inr x) (inl ∗) = idp
     e→:>e← (succ n) (inr x) (inr y) = ooo
       where
@@ -270,22 +275,22 @@ aforementioned equivalence. \end{proof}
   e-is-bijection
     : ∀ (n : ℕ) → (x : ⟦ succ n ⟧)
     → isBijection (apply $ e n x)
-      ⟦n⟧-is-set
-      (∑-set ⟦n⟧-is-set
+      ⟦⟧₂-is-set
+      (∑-set ⟦⟧₂-is-set
       (λ p → pi-is-set (λ _ → 𝟘-is-set)))
 
   e-is-bijection n x
-    = ≃-to-bijection ⟦n⟧-is-set (∑-set ⟦n⟧-is-set (λ p → pi-is-set (λ _ → 𝟘-is-set))) (e n x)
+    = ≃-to-bijection ⟦⟧₂-is-set (∑-set ⟦⟧₂-is-set (λ p → pi-is-set (λ _ → 𝟘-is-set))) (e n x)
 \end{code}
 
 \begin{code}[hide]
   inv-e-is-bijection
     : ∀ (n : ℕ) → (x : ⟦ succ n ⟧)
     → isBijection (apply $ ≃-sym $ e n x)
-        (∑-set ⟦n⟧-is-set (λ p → pi-is-set (λ _ → 𝟘-is-set))) ⟦n⟧-is-set
+        (∑-set ⟦⟧₂-is-set (λ p → pi-is-set (λ _ → 𝟘-is-set))) ⟦⟧₂-is-set
 
   inv-e-is-bijection n x
-    = ≃-to-bijection (∑-set ⟦n⟧-is-set (λ p → pi-is-set (λ _ → 𝟘-is-set))) ⟦n⟧-is-set (≃-sym $ e n x)
+    = ≃-to-bijection (∑-set ⟦⟧₂-is-set (λ p → pi-is-set (λ _ → 𝟘-is-set))) ⟦⟧₂-is-set (≃-sym $ e n x)
 \end{code}
 
 \begin{code}[hide]
@@ -297,7 +302,7 @@ aforementioned equivalence. \end{proof}
   palomar' 0 f _ = f (inl unit)
   palomar' (succ n) f f-is-inj  = palomar' n g g-is-injective
     where
-    h : (⟦ succ (succ n) ⟧ \\ inl unit) → (⟦ succ n ⟧ \\ (f (inl unit)))
+    h : (⟦ succ (succ n) ⟧ ─ inl unit) → (⟦ succ n ⟧ ─ (f (inl unit)))
     h w@(a , b) = (f a , λ b → π₂ w $ f-is-inj b)
 
     h-is-inj : isInjective h
@@ -317,10 +322,6 @@ aforementioned equivalence. \end{proof}
 \section{Proof of \Cref{pigeon-theorem} and other results. }
 
 \begin{proof}[Proof of \Cref{pigeon-theorem}]\label{proof-pigeon-theorem}
-
-\begin{code}[hide]
-  open ℕ-< {ℓ}
-\end{code}
 
 The idea here is basically consider the point $x :\equiv \mathsf{inl}
 (\mathsf{unit})$ (that represents the first point on each type $[n+1]$ and
@@ -358,11 +359,11 @@ The \Agda\ term for this proof is the following.
    --------------------------------------------------------------------------------
    → ¬ (isInjective f)
 
-  pigeon-theorem (succ n) zr       ∗ f f-is-inj = f (inl ∗)
+  pigeon-theorem (succ n) 0       ∗ f f-is-inj = f (inl ∗)
   pigeon-theorem (succ n) (succ m) p f f-is-inj
     = pigeon-theorem n m (succ-<-inj {n = m} p) g g-is-injective
     where
-    h : (⟦ succ n ⟧ \\ inl unit) → (⟦ succ m ⟧ \\ (f (inl unit)))
+    h : (⟦ succ n ⟧ ─ inl unit) → (⟦ succ m ⟧ ─ (f (inl unit)))
     h w@(a , b) = (f a , λ b → π₂ w $ f-is-inj b)
 
     h-is-inj : isInjective h
@@ -385,8 +386,14 @@ For any $n, m : ℕ$, if $[n] \simeq [m]$ then $n ≡ m$.
 \end{corollary}
 
 \begin{proof}
-By decidebility of natural numbers, we get an answer whether $n$ is equal to $m$ or not. If so, we are done. Otherwise, given the equivalence, $e : [n] ≃ [m]$, we consider the underlined function $f : [n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$ or $m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not injective when it really is ($f$ is an equivalence). Therefore, from this absurd, the theorem follows.
+
+By decidebility of natural numbers, we get an answer whether $n$ is equal to $m$ or not.
+If so, we are done. Otherwise, given the equivalence, $e : [n] ≃ [m]$, we consider the
+underlined function $f : [n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$
+or $m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not injective when it
+really is ($f$ is an equivalence). Therefore, from this absurd, the theorem follows.
 A similar argument is used when $m >n$ with the function $g$.
+
 \end{proof}
 
 

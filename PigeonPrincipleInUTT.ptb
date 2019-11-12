@@ -5,8 +5,8 @@
 \def\PTtemp{3}\empty
 \def\PTtemp{3.}\empty
 \def\PTtemp{3.}\empty
-\def\PTtemp{35}\empty
-\def\PTtemp{35.}\empty
+\def\PTtemp{34}\empty
+\def\PTtemp{34.}\empty
 \def\PTtemp{2.}\empty
 \def\PTtemp{4}\empty
 \def\PTtemp{4.}\empty
@@ -16,9 +16,9 @@
 \def\PTtemp{4.}\empty
 \def\PTtemp{4.}\empty
 \def\PTtemp{6}\empty
-\def\PTtemp{1115I}\empty
-\def\PTtemp{1115I.}\empty
-\def\PTtemp{1115I}\empty
+\def\PTtemp{1119I}\empty
+\def\PTtemp{1119I.}\empty
+\def\PTtemp{1119I}\empty
 \def\PTtemp{14.}\empty
 \def\PTtemp{4.}\empty
 \def\PTtemp{4.}\empty
@@ -36,8 +36,8 @@
 \def\PTtemp{3}\empty
 \def\PTtemp{3.}\empty
 \def\PTtemp{3.}\empty
-\def\PTtemp{35}\empty
-\def\PTtemp{35.}\empty
+\def\PTtemp{34}\empty
+\def\PTtemp{34.}\empty
 \def\PTtemp{2.}\empty
 \def\PTtemp{4}\empty
 \def\PTtemp{4.}\empty
@@ -47,9 +47,9 @@
 \def\PTtemp{4.}\empty
 \def\PTtemp{4.}\empty
 \def\PTtemp{6}\empty
-\def\PTtemp{1115I}\empty
-\def\PTtemp{1115I.}\empty
-\def\PTtemp{1115I}\empty
+\def\PTtemp{1119I}\empty
+\def\PTtemp{1119I.}\empty
+\def\PTtemp{1119I}\empty
 \def\PTtemp{14.}\empty
 \def\PTtemp{4.}\empty
 \def\PTtemp{4.}\empty

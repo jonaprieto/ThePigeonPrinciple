@@ -1,6 +1,7 @@
 \documentclass[11pt, a4paper, oneside]{amsart}
 
 \title{The Pigeonhole Principle}
+\date{Last updated : \today}
 \author{Jonathan Prieto-Cubides}
 
 \input{macros.tex}
@@ -83,6 +84,10 @@ definitions and theorems we need.
 \end{code}
 
 \begin{code}[hide]%
+\>[0][@{}l@{\AgdaIndent{1}}]%
+\>[2]\AgdaKeyword{hiding}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaOperator{\AgdaFunction{⟦\AgdaUnderscore{}⟧}}\AgdaSymbol{)}\<%
+\\
 \>[0]\AgdaKeyword{module}\AgdaSpace{}%
 \AgdaModule{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{ℓ}\AgdaSpace{}%
@@ -92,8 +97,14 @@ definitions and theorems we need.
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[2]\AgdaKeyword{open}\AgdaSpace{}%
-\AgdaModule{Fin2}\AgdaSpace{}%
+\AgdaModule{ℕ-ordering}\AgdaSpace{}%
 \AgdaBound{ℓ}\<%
+\\
+%
+\>[2]\AgdaOperator{\AgdaFunction{⟦\AgdaUnderscore{}⟧}}\AgdaSpace{}%
+\AgdaSymbol{=}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{⟦\AgdaUnderscore{}⟧₂}}\AgdaSpace{}%
+\AgdaSymbol{\{}\AgdaBound{ℓ}\AgdaSymbol{\}}\<%
 \end{code}
 
 \subsection{Types}
@@ -107,7 +118,7 @@ set $[n]$ without a point $x$, i.e., $[n] - \{ x\}$. The finite set of $n$
 elements in \texttt{Agda} is denoted by \texttt{⟦ n ⟧}. We are using for
 finite sets the definition that says $[n + 1] :\equiv 𝟙 + [n]$ and $[0]
 :\equiv 𝟘$. Propositional equality is denoted by ($\equiv$) instead of $(=)$.
-The type $ℕ$ for natural numbers has two constructors \texttt{zr}, and
+The type $ℕ$ for natural numbers has two constructors \texttt{zero}, and
 \texttt{succ}. The coproduct of types $A$ and $B$ is denoted by $A+B$ and it
 has two introduction rules named \texttt{inr}, and \texttt{inl}. We use the
 direct composition of functions also called \emph{diagramatic} composition,
@@ -120,8 +131,8 @@ A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
 
 \begin{code}[hide]%
 %
-\>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}\textbackslash{}\textbackslash{}\AgdaUnderscore{}}}%
-\>[8]\AgdaSymbol{:}\AgdaSpace{}%
+\>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}─\AgdaUnderscore{}}}%
+\>[7]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{ℓ}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -139,11 +150,11 @@ A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
 \AgdaBound{ℓ}\<%
 \\
 %
-\>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}\textbackslash{}\textbackslash{}\AgdaUnderscore{}}}%
-\>[8]\AgdaSymbol{\{}\AgdaBound{ℓ}\AgdaSymbol{\}}\AgdaSpace{}%
+\>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}─\AgdaUnderscore{}}}%
+\>[7]\AgdaSymbol{\{}\AgdaBound{ℓ}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaBound{A}\AgdaSpace{}%
 \AgdaBound{x}%
-\>[17]\AgdaSymbol{=}\AgdaSpace{}%
+\>[16]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaRecord{∑}\AgdaSpace{}%
 \AgdaBound{A}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
@@ -160,11 +171,14 @@ A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
 \section{A proof of \Cref{pigeon-theorem}}
 
 We first need to show there exists an equivalence between two (finite) types
-that differs only by one point. So we define the following (recursive) functions \texttt{e→} and \texttt{e←}.
+that differs only by one point. So we define the following (recursive)
+functions \texttt{e→} and \texttt{e←}.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{removing-one-point-from-finite-set.pdf}
-\caption{Construction of the equivalence $e$ in (\Cref{equivalence-e}).  The directions of the arrows (forward and backward) correspond to the functions in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
+\caption{Construction of the equivalence $e$ in (\Cref{equivalence-e}).
+The directions of the arrows (forward and backward) correspond to the functions
+in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \end{figure}
 
 \begin{definition}\label{definition-e-fun}
@@ -172,7 +186,7 @@ that differs only by one point. So we define the following (recursive) functions
 \begin{code}%
 %
 \>[2]\AgdaFunction{e→}%
-\>[39I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[43I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{n}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -185,7 +199,7 @@ that differs only by one point. So we define the following (recursive) functions
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[39I]%
+\>[.][@{}l@{}]\<[43I]%
 \>[5]\AgdaComment{--------------------------}\<%
 \\
 %
@@ -194,12 +208,12 @@ that differs only by one point. So we define the following (recursive) functions
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaSymbol{((}\AgdaOperator{\AgdaFunction{⟦}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{⟦}}\AgdaSpace{}%
 \AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{⟧}}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{\textbackslash{}\textbackslash{}}}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{x}\AgdaSymbol{))}\<%
+\AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{─}}\AgdaSpace{}%
+\AgdaBound{x}\<%
 \end{code}
 
 \begin{code}%
@@ -269,7 +283,7 @@ that differs only by one point. So we define the following (recursive) functions
 \begin{code}%
 %
 \>[2]\AgdaFunction{e←}%
-\>[108I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[112I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{n}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -282,16 +296,16 @@ that differs only by one point. So we define the following (recursive) functions
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSymbol{)}\<%
 \\
-\>[108I][@{}l@{\AgdaIndent{0}}]%
+\>[112I][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaComment{--------------------------}\<%
 \\
-\>[.][@{}l@{}]\<[108I]%
+\>[.][@{}l@{}]\<[112I]%
 \>[5]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaOperator{\AgdaFunction{⟦}}\AgdaSpace{}%
 \AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{\textbackslash{}\textbackslash{}}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{─}}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟦}}\AgdaSpace{}%
@@ -302,14 +316,14 @@ that differs only by one point. So we define the following (recursive) functions
 \begin{code}%
 %
 \>[2]\AgdaFunction{e←}\AgdaSpace{}%
-\AgdaInductiveConstructor{zr}\AgdaSpace{}%
+\AgdaNumber{0}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{∗}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{∗}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaBound{b}\AgdaSymbol{)}%
-\>[35]\AgdaSymbol{=}\AgdaSpace{}%
+\AgdaBound{b}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaBound{b}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{ap}\AgdaSpace{}%
 \AgdaInductiveConstructor{inl}\AgdaSpace{}%
@@ -338,20 +352,20 @@ that differs only by one point. So we define the following (recursive) functions
 \AgdaCatchallClause{\AgdaBound{y}}\AgdaSpace{}%
 \AgdaCatchallClause{\AgdaOperator{\AgdaInductiveConstructor{,}}}\AgdaSpace{}%
 \AgdaCatchallClause{\AgdaBound{b}}\AgdaCatchallClause{\AgdaSymbol{)}}%
-\>[35]\AgdaSymbol{=}\AgdaSpace{}%
+\>[28]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaBound{y}\<%
 \\
 %
 \>[2]\AgdaFunction{e←}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
-\AgdaInductiveConstructor{zr}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaNumber{0}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaBound{x₁}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaBound{π₄}\AgdaSymbol{)}%
-\>[43]\AgdaSymbol{=}\AgdaSpace{}%
+\AgdaBound{π₄}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaBound{x}\<%
 \\
 %
@@ -441,7 +455,7 @@ that differs only by one point. So we define the following (recursive) functions
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[2]\AgdaFunction{DEF-g}\AgdaSpace{}%
-\AgdaSymbol{\{}\AgdaInductiveConstructor{zr}\AgdaSymbol{\}}\AgdaSpace{}%
+\AgdaSymbol{\{}\AgdaNumber{0}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{∗}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
@@ -544,14 +558,14 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{\textbackslash{}\textbackslash{}}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{─}}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\<%
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[2]\AgdaFunction{e}%
-\>[295I]\AgdaBound{n}\AgdaSpace{}%
+\>[301I]\AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{quasiinverse-to-≃}\AgdaSpace{}%
@@ -571,7 +585,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{))}\<%
 \\
-\>[.][@{}l@{}]\<[295I]%
+\>[.][@{}l@{}]\<[301I]%
 \>[4]\AgdaKeyword{where}\<%
 \end{code}
 
@@ -609,7 +623,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \begin{code}[hide]%
 %
 \>[4]\AgdaFunction{e←:>e→}\AgdaSpace{}%
-\AgdaInductiveConstructor{zr}\AgdaSpace{}%
+\AgdaNumber{0}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{∗}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
@@ -667,7 +681,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 %
 \>[4]\AgdaFunction{e←:>e→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
-\AgdaInductiveConstructor{zr}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaNumber{0}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{))}\AgdaSpace{}%
@@ -774,7 +788,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j3}%
-\>[462I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[468I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -790,9 +804,9 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{p}\AgdaSymbol{))))}\<%
 \\
-\>[.][@{}l@{}]\<[462I]%
+\>[.][@{}l@{}]\<[468I]%
 \>[9]\AgdaOperator{\AgdaFunction{≡}}%
-\>[477I]\AgdaInductiveConstructor{inr}\AgdaSpace{}%
+\>[483I]\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -810,7 +824,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)\}}\<%
 \\
-\>[477I][@{}l@{\AgdaIndent{0}}]%
+\>[483I][@{}l@{\AgdaIndent{0}}]%
 \>[14]\AgdaSymbol{(}\AgdaBound{y}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{p}\AgdaSymbol{))}\<%
@@ -955,7 +969,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 %
 \>[4]\AgdaFunction{e→:>e←}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
-\AgdaInductiveConstructor{zr}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaNumber{0}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{∗}\AgdaSymbol{))}\AgdaSpace{}%
@@ -1015,7 +1029,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 %
 \>[6]\AgdaFunction{j}\AgdaSpace{}%
 \AgdaSymbol{:}%
-\>[630I]\AgdaFunction{e→}\AgdaSpace{}%
+\>[636I]\AgdaFunction{e→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
@@ -1023,7 +1037,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaBound{y}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[630I]%
+\>[.][@{}l@{}]\<[636I]%
 \>[10]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
@@ -1053,7 +1067,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j1}%
-\>[657I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[663I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaFunction{e←}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
@@ -1067,7 +1081,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaBound{y}\AgdaSymbol{))}\<%
 \\
-\>[657I][@{}l@{\AgdaIndent{0}}]%
+\>[663I][@{}l@{\AgdaIndent{0}}]%
 \>[10]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaFunction{e←}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
@@ -1110,7 +1124,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j3}%
-\>[701I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[707I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -1133,7 +1147,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}))}\<%
 \\
-\>[.][@{}l@{}]\<[701I]%
+\>[.][@{}l@{}]\<[707I]%
 \>[9]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{e←}\AgdaSpace{}%
@@ -1258,19 +1272,19 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaSymbol{→}%
-\>[806I]\AgdaFunction{isBijection}\AgdaSpace{}%
+\>[812I]\AgdaFunction{isBijection}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{apply}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{\$}}\AgdaSpace{}%
 \AgdaFunction{e}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[806I]%
-\>[6]\AgdaFunction{⟦n⟧-is-set}\<%
+\>[.][@{}l@{}]\<[812I]%
+\>[6]\AgdaFunction{⟦⟧₂-is-set}\<%
 \\
 %
 \>[6]\AgdaSymbol{(}\AgdaFunction{∑-set}\AgdaSpace{}%
-\AgdaFunction{⟦n⟧-is-set}\<%
+\AgdaFunction{⟦⟧₂-is-set}\<%
 \\
 %
 \>[6]\AgdaSymbol{(λ}\AgdaSpace{}%
@@ -1292,9 +1306,9 @@ aforementioned equivalence. \end{proof}
 \>[2][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{≃-to-bijection}\AgdaSpace{}%
-\AgdaFunction{⟦n⟧-is-set}\AgdaSpace{}%
+\AgdaFunction{⟦⟧₂-is-set}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{∑-set}\AgdaSpace{}%
-\AgdaFunction{⟦n⟧-is-set}\AgdaSpace{}%
+\AgdaFunction{⟦⟧₂-is-set}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
@@ -1328,7 +1342,7 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaSymbol{→}%
-\>[848I]\AgdaFunction{isBijection}\AgdaSpace{}%
+\>[854I]\AgdaFunction{isBijection}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{apply}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{\$}}\AgdaSpace{}%
 \AgdaFunction{≃-sym}\AgdaSpace{}%
@@ -1337,9 +1351,9 @@ aforementioned equivalence. \end{proof}
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\<%
 \\
-\>[848I][@{}l@{\AgdaIndent{0}}]%
+\>[854I][@{}l@{\AgdaIndent{0}}]%
 \>[8]\AgdaSymbol{(}\AgdaFunction{∑-set}\AgdaSpace{}%
-\AgdaFunction{⟦n⟧-is-set}\AgdaSpace{}%
+\AgdaFunction{⟦⟧₂-is-set}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
@@ -1348,7 +1362,7 @@ aforementioned equivalence. \end{proof}
 \AgdaBound{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaFunction{𝟘-is-set}\AgdaSymbol{)))}\AgdaSpace{}%
-\AgdaFunction{⟦n⟧-is-set}\<%
+\AgdaFunction{⟦⟧₂-is-set}\<%
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
@@ -1361,7 +1375,7 @@ aforementioned equivalence. \end{proof}
 \>[4]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{≃-to-bijection}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{∑-set}\AgdaSpace{}%
-\AgdaFunction{⟦n⟧-is-set}\AgdaSpace{}%
+\AgdaFunction{⟦⟧₂-is-set}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
@@ -1370,7 +1384,7 @@ aforementioned equivalence. \end{proof}
 \AgdaBound{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaFunction{𝟘-is-set}\AgdaSymbol{)))}\AgdaSpace{}%
-\AgdaFunction{⟦n⟧-is-set}\AgdaSpace{}%
+\AgdaFunction{⟦⟧₂-is-set}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{≃-sym}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{\$}}\AgdaSpace{}%
 \AgdaFunction{e}\AgdaSpace{}%
@@ -1445,7 +1459,7 @@ aforementioned equivalence. \end{proof}
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{\textbackslash{}\textbackslash{}}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{─}}\AgdaSpace{}%
 \AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{unit}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
@@ -1453,7 +1467,7 @@ aforementioned equivalence. \end{proof}
 \AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{\textbackslash{}\textbackslash{}}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{─}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{f}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{unit}\AgdaSymbol{)))}\<%
@@ -1496,9 +1510,9 @@ aforementioned equivalence. \end{proof}
 \\
 \>[4][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaSymbol{=}%
-\>[961I]\AgdaFunction{pair=}\<%
+\>[967I]\AgdaFunction{pair=}\<%
 \\
-\>[.][@{}l@{}]\<[961I]%
+\>[.][@{}l@{}]\<[967I]%
 \>[8]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{ap}\AgdaSpace{}%
 \AgdaField{π₁}\AgdaSpace{}%
@@ -1563,7 +1577,7 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaFunction{g-is-injective}%
-\>[1006I]\AgdaSymbol{=}\AgdaSpace{}%
+\>[1012I]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{∘-injectives-is-injective}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
@@ -1573,7 +1587,7 @@ aforementioned equivalence. \end{proof}
 \AgdaSymbol{\AgdaUnderscore{})}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\<%
 \\
-\>[.][@{}l@{}]\<[1006I]%
+\>[.][@{}l@{}]\<[1012I]%
 \>[19]\AgdaSymbol{(}\AgdaFunction{∘-injectives-is-injective}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaFunction{h-is-inj}%
@@ -1588,13 +1602,6 @@ aforementioned equivalence. \end{proof}
 \section{Proof of \Cref{pigeon-theorem} and other results. }
 
 \begin{proof}[Proof of \Cref{pigeon-theorem}]\label{proof-pigeon-theorem}
-
-\begin{code}[hide]%
-%
-\>[2]\AgdaKeyword{open}\AgdaSpace{}%
-\AgdaModule{ℕ-<}\AgdaSpace{}%
-\AgdaSymbol{\{}\AgdaBound{ℓ}\AgdaSymbol{\}}\<%
-\end{code}
 
 The idea here is basically consider the point $x :\equiv \mathsf{inl}
 (\mathsf{unit})$ (that represents the first point on each type $[n+1]$ and
@@ -1669,8 +1676,8 @@ The \Agda\ term for this proof is the following.
 \>[2]\AgdaFunction{pigeon-theorem}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaInductiveConstructor{zr}%
-\>[35]\AgdaInductiveConstructor{∗}\AgdaSpace{}%
+\AgdaNumber{0}%
+\>[34]\AgdaInductiveConstructor{∗}\AgdaSpace{}%
 \AgdaBound{f}\AgdaSpace{}%
 \AgdaBound{f-is-inj}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -1711,7 +1718,7 @@ The \Agda\ term for this proof is the following.
 \AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{\textbackslash{}\textbackslash{}}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{─}}\AgdaSpace{}%
 \AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{unit}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
@@ -1719,7 +1726,7 @@ The \Agda\ term for this proof is the following.
 \AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{\textbackslash{}\textbackslash{}}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{─}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{f}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
 \AgdaInductiveConstructor{unit}\AgdaSymbol{)))}\<%
@@ -1763,12 +1770,12 @@ The \Agda\ term for this proof is the following.
 \>[4][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{pair=}%
-\>[1115I]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
+\>[1119I]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{ap}\AgdaSpace{}%
 \AgdaField{π₁}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[1115I]%
+\>[.][@{}l@{}]\<[1119I]%
 \>[14]\AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{pi-is-prop}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
@@ -1855,8 +1862,14 @@ For any $n, m : ℕ$, if $[n] \simeq [m]$ then $n ≡ m$.
 \end{corollary}
 
 \begin{proof}
-By decidebility of natural numbers, we get an answer whether $n$ is equal to $m$ or not. If so, we are done. Otherwise, given the equivalence, $e : [n] ≃ [m]$, we consider the underlined function $f : [n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$ or $m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not injective when it really is ($f$ is an equivalence). Therefore, from this absurd, the theorem follows.
+
+By decidebility of natural numbers, we get an answer whether $n$ is equal to $m$ or not.
+If so, we are done. Otherwise, given the equivalence, $e : [n] ≃ [m]$, we consider the
+underlined function $f : [n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$
+or $m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not injective when it
+really is ($f$ is an equivalence). Therefore, from this absurd, the theorem follows.
 A similar argument is used when $m >n$ with the function $g$.
+
 \end{proof}
 
 
