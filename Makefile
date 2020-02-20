@@ -1,11 +1,11 @@
 
 all:
-	@agda --latex --allow-unsolved-metas PigeonPrincipleInUTT.lagda &&\
-	 latexmk -pdf -xelatex latex/PigeonPrincipleInUTT.tex
+	@agda --latex --allow-unsolved-metas The-pigeonhole-principle-HoTT.lagda &&\
+	 latexmk -pdf -xelatex latex/The-pigeonhole-principle-HoTT.tex
 
 clean:
-	- @latexmk -c latex/PigeonPrincipleInUTT.tex
-	- @latexmk -c PigeonPrincipleInUTT.lagda
+	- @latexmk -c latex/The-pigeonhole-principle-HoTT.tex
+	- @latexmk -c The-pigeonhole-principle-HoTT.lagda
 	- @rm -f *.nav
 	- @rm -f *.out
 	- @rm -f *.blg
