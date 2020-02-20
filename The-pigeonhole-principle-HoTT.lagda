@@ -2,7 +2,7 @@
 
 \title{The Pigeonhole Principle}
 \date{Last updated : \today}
-\author{Jonathan Cubides}
+\author{Jonathan Prieto-Cubides}
 
 \input{macros.tex}
 \usepackage{latex/agda}

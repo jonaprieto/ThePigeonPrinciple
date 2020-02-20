@@ -2,7 +2,7 @@
 
 \title{The Pigeonhole Principle}
 \date{Last updated : \today}
-\author{Jonathan Cubides}
+\author{Jonathan Prieto-Cubides}
 
 \input{macros.tex}
 \usepackage{latex/agda}
@@ -216,9 +216,8 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \end{code}
 
 \begin{code}%
-\>[0][@{}l@{\AgdaIndent{3}}]%
-\>[1]%
-\>[65I]\AgdaFunction{e→}\AgdaSpace{}%
+%
+\>[2]\AgdaFunction{e→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inl}\AgdaSpace{}%
@@ -231,7 +230,7 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \AgdaSymbol{λ}\AgdaSpace{}%
 \AgdaSymbol{()}\<%
 \\
-\>[.][@{}l@{}]\<[65I]%
+%
 \>[2]\AgdaFunction{e→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
@@ -283,7 +282,7 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \begin{code}%
 %
 \>[2]\AgdaFunction{e←}%
-\>[113I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[112I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{n}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -296,10 +295,10 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSymbol{)}\<%
 \\
-\>[113I][@{}l@{\AgdaIndent{0}}]%
+\>[112I][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaComment{--------------------------}\<%
 \\
-\>[.][@{}l@{}]\<[113I]%
+\>[.][@{}l@{}]\<[112I]%
 \>[5]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaOperator{\AgdaFunction{⟦}}\AgdaSpace{}%
 \AgdaInductiveConstructor{succ}\AgdaSpace{}%
@@ -565,7 +564,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[2]\AgdaFunction{e}%
-\>[302I]\AgdaBound{n}\AgdaSpace{}%
+\>[301I]\AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{quasiinverse-to-≃}\AgdaSpace{}%
@@ -585,7 +584,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{))}\<%
 \\
-\>[.][@{}l@{}]\<[302I]%
+\>[.][@{}l@{}]\<[301I]%
 \>[4]\AgdaKeyword{where}\<%
 \end{code}
 
@@ -788,7 +787,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j3}%
-\>[469I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[468I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -804,9 +803,9 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{p}\AgdaSymbol{))))}\<%
 \\
-\>[.][@{}l@{}]\<[469I]%
+\>[.][@{}l@{}]\<[468I]%
 \>[9]\AgdaOperator{\AgdaFunction{≡}}%
-\>[484I]\AgdaInductiveConstructor{inr}\AgdaSpace{}%
+\>[483I]\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -824,7 +823,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)\}}\<%
 \\
-\>[484I][@{}l@{\AgdaIndent{0}}]%
+\>[483I][@{}l@{\AgdaIndent{0}}]%
 \>[14]\AgdaSymbol{(}\AgdaBound{y}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{p}\AgdaSymbol{))}\<%
@@ -1029,7 +1028,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 %
 \>[6]\AgdaFunction{j}\AgdaSpace{}%
 \AgdaSymbol{:}%
-\>[637I]\AgdaFunction{e→}\AgdaSpace{}%
+\>[636I]\AgdaFunction{e→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
@@ -1037,7 +1036,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaBound{y}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[637I]%
+\>[.][@{}l@{}]\<[636I]%
 \>[10]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
@@ -1067,7 +1066,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j1}%
-\>[664I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[663I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaFunction{e←}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
@@ -1081,7 +1080,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaBound{y}\AgdaSymbol{))}\<%
 \\
-\>[664I][@{}l@{\AgdaIndent{0}}]%
+\>[663I][@{}l@{\AgdaIndent{0}}]%
 \>[10]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaFunction{e←}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
@@ -1124,7 +1123,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j3}%
-\>[708I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[707I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -1147,7 +1146,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}))}\<%
 \\
-\>[.][@{}l@{}]\<[708I]%
+\>[.][@{}l@{}]\<[707I]%
 \>[9]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{e←}\AgdaSpace{}%
@@ -1272,14 +1271,14 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaSymbol{→}%
-\>[813I]\AgdaFunction{isBijection}\AgdaSpace{}%
+\>[812I]\AgdaFunction{isBijection}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{apply}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{\$}}\AgdaSpace{}%
 \AgdaFunction{e}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[813I]%
+\>[.][@{}l@{}]\<[812I]%
 \>[6]\AgdaFunction{⟦⟧₂-is-set}\<%
 \\
 %
@@ -1342,7 +1341,7 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaSymbol{→}%
-\>[855I]\AgdaFunction{isBijection}\AgdaSpace{}%
+\>[854I]\AgdaFunction{isBijection}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{apply}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{\$}}\AgdaSpace{}%
 \AgdaFunction{≃-sym}\AgdaSpace{}%
@@ -1351,7 +1350,7 @@ aforementioned equivalence. \end{proof}
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\<%
 \\
-\>[855I][@{}l@{\AgdaIndent{0}}]%
+\>[854I][@{}l@{\AgdaIndent{0}}]%
 \>[8]\AgdaSymbol{(}\AgdaFunction{∑-set}\AgdaSpace{}%
 \AgdaFunction{⟦⟧₂-is-set}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
@@ -1510,9 +1509,9 @@ aforementioned equivalence. \end{proof}
 \\
 \>[4][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaSymbol{=}%
-\>[968I]\AgdaFunction{pair=}\<%
+\>[967I]\AgdaFunction{pair=}\<%
 \\
-\>[.][@{}l@{}]\<[968I]%
+\>[.][@{}l@{}]\<[967I]%
 \>[8]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{ap}\AgdaSpace{}%
 \AgdaField{π₁}\AgdaSpace{}%
@@ -1577,7 +1576,7 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaFunction{g-is-injective}%
-\>[1013I]\AgdaSymbol{=}\AgdaSpace{}%
+\>[1012I]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{∘-injectives-is-injective}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
@@ -1587,7 +1586,7 @@ aforementioned equivalence. \end{proof}
 \AgdaSymbol{\AgdaUnderscore{})}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\<%
 \\
-\>[.][@{}l@{}]\<[1013I]%
+\>[.][@{}l@{}]\<[1012I]%
 \>[19]\AgdaSymbol{(}\AgdaFunction{∘-injectives-is-injective}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaFunction{h-is-inj}%
@@ -1770,12 +1769,12 @@ The \Agda\ term for this proof is the following.
 \>[4][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{pair=}%
-\>[1120I]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
+\>[1119I]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{ap}\AgdaSpace{}%
 \AgdaField{π₁}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[1120I]%
+\>[.][@{}l@{}]\<[1119I]%
 \>[14]\AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{pi-is-prop}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
