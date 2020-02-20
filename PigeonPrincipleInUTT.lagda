@@ -77,7 +77,7 @@ open import MiniHoTT
 \end{code}
 
 \begin{code}[hide]
-  hiding (⟦_⟧)
+  hiding (Fin)
 module _ {ℓ : Level} where
   open ℕ-ordering ℓ
   ⟦_⟧ = ⟦_⟧₂ {ℓ}
@@ -125,7 +125,7 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 
 \begin{definition}\label{definition-e-fun}
 \hspace{5cm}
-\begin{code}
+ \begin{code}
   e→ : ∀ (n : ℕ) → (x : ⟦ succ n ⟧)
      --------------------------
      → ⟦ n ⟧ → ⟦ succ n ⟧ ─ x
@@ -170,7 +170,7 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \end{code}
 
 \end{definition}
-
+gm
 \begin{lemma}\label{equivalence-e}
 For any $n : ℕ$ , $x : [ n + 1 ]$,
 the types $[n]$ and $[ n + 1] - \{x\}$ are (homotopy) equivalent.
