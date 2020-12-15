@@ -1,6 +1,6 @@
 
 all:
-	@agda --latex --allow-unsolved-metas The-pigeonhole-principle-HoTT.lagda &&\
+	@agda --latex The-pigeonhole-principle-HoTT.lagda &&\
 	 latexmk -pdf -xelatex latex/The-pigeonhole-principle-HoTT.tex
 
 clean:

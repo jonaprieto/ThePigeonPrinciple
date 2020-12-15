@@ -1,8 +1,8 @@
 \documentclass[11pt, a4paper, oneside]{amsart}
 
 \title{The Pigeonhole Principle}
-\date{Last updated : \today}
-\author{Jonathan Prieto-Cubides}
+\date{2019/08/02. Last revision: \today}
+\author{Jonathan Cubides}
 
 \input{macros.tex}
 \usepackage{latex/agda}
@@ -13,46 +13,47 @@
 
 \begin{abstract}
 There are many formulations of the so-called Pigeonhole principle,
-some of them proved in constructive mathematics and formalized
-in some proof-assistants. In this work, we show one these formulations
-proved in the context of Univalent Type theory and
-formalized in the proof-assistant Agda.
+some of them proved in constructive mathematics and formalized in some
+proof-assistants. In this work, we show one these formulations proved
+in the context of Univalent Type theory and formalized in the
+proof-assistant Agda.
 \end{abstract}
 
 \section{Introduction}
 
-The pigeonhole principle says that \emph{if you put $n$ pigeons in
-$m$ holes, with $m < n$, then at least one hole has more
-than one pigeon in it.
-}\\
+The pigeonhole principle says that \emph{if you put $n$ pigeons in $m$
+holes, with $m < n$, then at least one hole has more than one pigeon
+in it.}\\
 
 In~\cite{symmetrybook} the authors give the following formulation
-(\Cref{lem:PHP}) of the Pigeonhole Principle joint with a constructive proof
-that it holds. The proof can be found formalized in \texttt{Coq}\footnote{In
-the \texttt{Coq} standard library
+(\Cref{lem:PHP}) of the Pigeonhole Principle joint with a constructive
+proof that it holds. The proof can be found formalized in
+\texttt{Coq}\footnote{In the \texttt{Coq} standard library
 \url{https://coq.inria.fr/library/Coq.Sets.Image.html}.}.
 
 \begin{theorem}[Lemma 2.15.6 in \cite{symmetrybook}]\label{lem:PHP}
-For all $N:ℕ$ and $f:ℕ\to ℕ$ such that $f(n)<N$
-for all $n<N+1$, there exist $m < n < N+1$ such that $f(n)=f(m)$.
-\end{theorem}
-The function $f$ above intends to maps the number of a pigeon in $\{0\cdots n−1\}$ to
-the number of its hole in $\{0\cdots m−1\}$.
-
-In this work, we consider an equivalent formulation in \Cref{pigeon-theorem},
-which can be seen as a generalization of \Cref{lem:PHP}. The formal statement
-says, there is no injective function that can go from a finite set to a smaller
-one. We denote the finite set of $n$ elements with $[n]$.
-
-\begin{theorem}[Pigeonhole Theorem]\label{pigeon-theorem}
-For any $n,\, m : ℕ$ when $m < n$,  a function $f : [ n ] \to [ m ]$
-can not be injective.
+For all $N:ℕ$ and $f:ℕ\to ℕ$ such that $f(n)<N$ for all $n<N+1$, there
+exist $m < n < N+1$ such that $f(n)=f(m)$.
 \end{theorem}
 
-Another similar formulation can be stated when instead of finite sets, we
-consider for any function, the cardinality of its domain and its image. We
-give the following formulations that follow the same fashion of
-\Cref{pigeon-theorem}.
+The function $f$ above intends to map the number of a pigeon in
+$\{0\cdots n−1\}$ to the number of its hole in $\{0\cdots m−1\}$.
+
+In this work, we consider an equivalent formulation in
+\Cref{pigeon-theorem}, which can be seen as a generalization of
+\Cref{lem:PHP}. The formal statement says, there is no injective
+function that can go from a finite set to a smaller one. We denote the
+finite set of $n$ elements with $[n]$.
+
+\begin{theorem}[Pigeonhole Theorem]\label{pigeon-theorem} For any
+$n,\, m : ℕ$ when $m < n$,  a function $f : [ n ] \to [ m ]$ can not
+be injective.
+\end{theorem}
+
+Another similar formulation can be stated when instead of finite sets,
+we consider for any function, the cardinality of its domain and its
+image. We give the following formulations that follow the same fashion
+of \Cref{pigeon-theorem}.
 
 For any $n : ℕ$, $f : [n] \to [n]$.
 \begin{itemize}
@@ -64,10 +65,11 @@ For any $n : ℕ$, $f : [n] \to [n]$.
 
 \subsection{Agda formalization}
 
-To check the proof in~\Cref{proof-pigeon-theorem} of \Cref{pigeon-theorem}, we
-use \texttt{Agda v2.6.0} without the \emph{Axiom K} to be consistent with
-Univalent mathematics. We also import a library to work with Homotopy Type
-Theory called \texttt{MiniHoTT}\footnote{Available on
+To check the proof in~\Cref{proof-pigeon-theorem} of
+\Cref{pigeon-theorem}, we use \texttt{Agda v2.6.0} without the
+\emph{Axiom K} to be consistent with Univalent mathematics. We also
+import a library to work with Homotopy Type Theory called
+\texttt{MiniHoTT}\footnote{Available on
 \url{http://jonaprieto.github.io/mini-hott}.} that includes some type
 definitions and theorems we need.
 
@@ -83,10 +85,6 @@ definitions and theorems we need.
 \end{code}
 
 \begin{code}[hide]%
-\>[0][@{}l@{\AgdaIndent{1}}]%
-\>[2]\AgdaKeyword{hiding}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaFunction{Fin}\AgdaSymbol{)}\<%
-\\
 \>[0]\AgdaKeyword{module}\AgdaSpace{}%
 \AgdaModule{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{ℓ}\AgdaSpace{}%
@@ -100,6 +98,11 @@ definitions and theorems we need.
 \AgdaBound{ℓ}\<%
 \\
 %
+\>[2]\AgdaKeyword{open}\AgdaSpace{}%
+\AgdaKeyword{import}\AgdaSpace{}%
+\AgdaModule{NaturalType}\<%
+\\
+%
 \>[2]\AgdaOperator{\AgdaFunction{⟦\AgdaUnderscore{}⟧}}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟦\AgdaUnderscore{}⟧₂}}\AgdaSpace{}%
@@ -108,21 +111,22 @@ definitions and theorems we need.
 
 \subsection{Types}
 
-We assume the reader is familiar with type theory notation as in Book HoTT
-\cite{hottbook} and with the basic \Agda\, syntax. For any type $A : \Type$,
-we define in~\Cref{eq:minus} the type $A - \{x\}$ as the type\footnote{We
-denote this symbol, minus, as  double-back-slashes in \Agda.} of elements of
-which are different with $x$. We will use this type to talk about the finite
-set $[n]$ without a point $x$, i.e., $[n] - \{ x\}$. The finite set of $n$
-elements in \texttt{Agda} is denoted by \texttt{⟦ n ⟧}. We are using for
-finite sets the definition that says $[n + 1] :\equiv 𝟙 + [n]$ and $[0]
-:\equiv 𝟘$. Propositional equality is denoted by ($\equiv$) instead of $(=)$.
-The type $ℕ$ for natural numbers has two constructors \texttt{zero}, and
-\texttt{succ}. The coproduct of types $A$ and $B$ is denoted by $A+B$ and it
-has two introduction rules named \texttt{inr}, and \texttt{inl}. We use the
-direct composition of functions also called \emph{diagramatic} composition,
-denoted in \texttt{Agda} by (\texttt{f :> g}) for $f : A \to B$ and $g : B \to
-C$, for types $A,B,$ and $C$.
+We assume the reader is familiar with type theory notation as in Book
+HoTT \cite{hottbook} and with the basic \Agda\, syntax. For any type
+$A : \Type$, we define in~\Cref{eq:minus} the type $A - \{x\}$ as the
+type\footnote{We denote this symbol, minus, as  double-back-slashes in
+\Agda.} of elements of which are different with $x$. We will use this
+type to talk about the finite set $[n]$ without a point $x$, i.e.,
+$[n] - \{ x\}$. The finite set of $n$ elements in \texttt{Agda} is
+denoted by \texttt{⟦ n ⟧}. We are using for finite sets the definition
+that says $[n + 1] :\equiv 𝟙 + [n]$ and $[0] :\equiv 𝟘$.
+Propositional equality is denoted by ($\equiv$) instead of $(=)$. The
+type $ℕ$ for natural numbers has two constructors \texttt{zero}, and
+\texttt{succ}. The coproduct of types $A$ and $B$ is denoted by $A+B$
+and it has two introduction rules named \texttt{inr}, and
+\texttt{inl}. We use the direct composition of functions also called
+\emph{diagramatic} composition, denoted in \texttt{Agda} by (\texttt{f
+:> g}) for $f : A \to B$ and $g : B \to C$, for types $A,B,$ and $C$.
 
 \begin{equation}\label{eq:minus}
 A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
@@ -154,7 +158,7 @@ A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
 \AgdaBound{A}\AgdaSpace{}%
 \AgdaBound{x}%
 \>[16]\AgdaSymbol{=}\AgdaSpace{}%
-\AgdaRecord{∑}\AgdaSpace{}%
+\AgdaFunction{∑}\AgdaSpace{}%
 \AgdaBound{A}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
 \AgdaBound{a}\AgdaSpace{}%
@@ -169,15 +173,16 @@ A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
 
 \section{A proof of \Cref{pigeon-theorem}}
 
-We first need to show there exists an equivalence between two (finite) types
-that differs only by one point. So we define the following (recursive)
-functions \texttt{e→} and \texttt{e←}.
+We first need to show there exists an equivalence between two (finite)
+types that differs only by one point. So we define the following
+(recursive) functions \texttt{e→} and \texttt{e←}.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{removing-one-point-from-finite-set.pdf}
-\caption{Construction of the equivalence $e$ in (\Cref{equivalence-e}).
-The directions of the arrows (forward and backward) correspond to the functions
-in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
+\caption{Construction of the equivalence $e$ in
+(\Cref{equivalence-e}). The directions of the arrows (forward and
+backward) correspond to the functions in \Cref{definition-e-fun} and
+\Cref{definition-e-inv}, respectively.}
 \end{figure}
 
 \begin{definition}\label{definition-e-fun}
@@ -185,7 +190,7 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
  \begin{code}%
 %
 \>[2]\AgdaFunction{e→}%
-\>[43I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[44I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{n}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -198,7 +203,7 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[43I]%
+\>[.][@{}l@{}]\<[44I]%
 \>[5]\AgdaComment{--------------------------}\<%
 \\
 %
@@ -282,7 +287,7 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \begin{code}%
 %
 \>[2]\AgdaFunction{e←}%
-\>[112I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[113I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{n}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -295,10 +300,10 @@ in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSymbol{)}\<%
 \\
-\>[112I][@{}l@{\AgdaIndent{0}}]%
+\>[113I][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaComment{--------------------------}\<%
 \\
-\>[.][@{}l@{}]\<[112I]%
+\>[.][@{}l@{}]\<[113I]%
 \>[5]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaOperator{\AgdaFunction{⟦}}\AgdaSpace{}%
 \AgdaInductiveConstructor{succ}\AgdaSpace{}%
@@ -564,7 +569,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[2]\AgdaFunction{e}%
-\>[301I]\AgdaBound{n}\AgdaSpace{}%
+\>[302I]\AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{quasiinverse-to-≃}\AgdaSpace{}%
@@ -584,7 +589,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{))}\<%
 \\
-\>[.][@{}l@{}]\<[301I]%
+\>[.][@{}l@{}]\<[302I]%
 \>[4]\AgdaKeyword{where}\<%
 \end{code}
 
@@ -787,7 +792,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j3}%
-\>[468I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[469I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -803,9 +808,9 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{p}\AgdaSymbol{))))}\<%
 \\
-\>[.][@{}l@{}]\<[468I]%
+\>[.][@{}l@{}]\<[469I]%
 \>[9]\AgdaOperator{\AgdaFunction{≡}}%
-\>[483I]\AgdaInductiveConstructor{inr}\AgdaSpace{}%
+\>[484I]\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -823,7 +828,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)\}}\<%
 \\
-\>[483I][@{}l@{\AgdaIndent{0}}]%
+\>[484I][@{}l@{\AgdaIndent{0}}]%
 \>[14]\AgdaSymbol{(}\AgdaBound{y}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{p}\AgdaSymbol{))}\<%
@@ -1028,7 +1033,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 %
 \>[6]\AgdaFunction{j}\AgdaSpace{}%
 \AgdaSymbol{:}%
-\>[636I]\AgdaFunction{e→}\AgdaSpace{}%
+\>[637I]\AgdaFunction{e→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
@@ -1036,7 +1041,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaBound{y}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[636I]%
+\>[.][@{}l@{}]\<[637I]%
 \>[10]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
@@ -1066,7 +1071,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j1}%
-\>[663I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[664I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaFunction{e←}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
@@ -1080,7 +1085,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{(}\AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaBound{y}\AgdaSymbol{))}\<%
 \\
-\>[663I][@{}l@{\AgdaIndent{0}}]%
+\>[664I][@{}l@{\AgdaIndent{0}}]%
 \>[10]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaFunction{e←}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{succ}\AgdaSpace{}%
@@ -1123,7 +1128,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \\[\AgdaEmptyExtraSkip]%
 %
 \>[6]\AgdaFunction{j3}%
-\>[707I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[708I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{A}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -1146,7 +1151,7 @@ also follow but non-trivially (See the \texttt{Agda} source for all details).
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}))}\<%
 \\
-\>[.][@{}l@{}]\<[707I]%
+\>[.][@{}l@{}]\<[708I]%
 \>[9]\AgdaOperator{\AgdaFunction{≡}}\AgdaSpace{}%
 \AgdaInductiveConstructor{inr}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{e←}\AgdaSpace{}%
@@ -1248,7 +1253,7 @@ The \texttt{e→} and \texttt{e←} functions are both injective functions.
 \begin{proof} By the equivalence in~\Cref{equivalence-e}, we can get a
 (proper) bijection since the corresponding types of that equivalence are in
 fact (homotopy) sets. Bijections are injections, so the result follows. For
-the function \texttt{e←} repeat the argument but we the symmetry of the
+the function \texttt{e←} repeat the argument, but for the symmetry of the
 aforementioned equivalence. \end{proof}
 
 \begin{code}[hide]%
@@ -1271,14 +1276,14 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaSymbol{→}%
-\>[812I]\AgdaFunction{isBijection}\AgdaSpace{}%
+\>[813I]\AgdaFunction{isBijection}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{apply}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{\$}}\AgdaSpace{}%
 \AgdaFunction{e}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[812I]%
+\>[.][@{}l@{}]\<[813I]%
 \>[6]\AgdaFunction{⟦⟧₂-is-set}\<%
 \\
 %
@@ -1341,7 +1346,7 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaSymbol{→}%
-\>[854I]\AgdaFunction{isBijection}\AgdaSpace{}%
+\>[855I]\AgdaFunction{isBijection}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{apply}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{\$}}\AgdaSpace{}%
 \AgdaFunction{≃-sym}\AgdaSpace{}%
@@ -1350,7 +1355,7 @@ aforementioned equivalence. \end{proof}
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\<%
 \\
-\>[854I][@{}l@{\AgdaIndent{0}}]%
+\>[855I][@{}l@{\AgdaIndent{0}}]%
 \>[8]\AgdaSymbol{(}\AgdaFunction{∑-set}\AgdaSpace{}%
 \AgdaFunction{⟦⟧₂-is-set}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
@@ -1509,9 +1514,9 @@ aforementioned equivalence. \end{proof}
 \\
 \>[4][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaSymbol{=}%
-\>[967I]\AgdaFunction{pair=}\<%
+\>[968I]\AgdaFunction{pair=}\<%
 \\
-\>[.][@{}l@{}]\<[967I]%
+\>[.][@{}l@{}]\<[968I]%
 \>[8]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{ap}\AgdaSpace{}%
 \AgdaField{π₁}\AgdaSpace{}%
@@ -1576,7 +1581,7 @@ aforementioned equivalence. \end{proof}
 \\
 %
 \>[4]\AgdaFunction{g-is-injective}%
-\>[1012I]\AgdaSymbol{=}\AgdaSpace{}%
+\>[1013I]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{∘-injectives-is-injective}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{π₁}\AgdaSpace{}%
@@ -1586,7 +1591,7 @@ aforementioned equivalence. \end{proof}
 \AgdaSymbol{\AgdaUnderscore{})}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\<%
 \\
-\>[.][@{}l@{}]\<[1012I]%
+\>[.][@{}l@{}]\<[1013I]%
 \>[19]\AgdaSymbol{(}\AgdaFunction{∘-injectives-is-injective}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\AgdaSpace{}%
 \AgdaFunction{h-is-inj}%
@@ -1602,13 +1607,14 @@ aforementioned equivalence. \end{proof}
 
 \begin{proof}[Proof of \Cref{pigeon-theorem}]\label{proof-pigeon-theorem}
 
-The idea here is basically consider the point $x :\equiv \mathsf{inl}
-(\mathsf{unit})$ (that represents the first point on each type $[n+1]$ and
-$[m+1]$) and its image by the function $f$. Then, we construct a function $h :
-[n + 1] - \{x\} \to [ m + 1 ] - \{ x\}$ which acts as the restriction of the
-given function $f$. Because $f$ is injective, and any restriction of it is
-also injective, $h$ is injective. Now, we do induction on $n$, and the
-induction hypothesis says any function $g : [n] → [m]$, $g$ is not injective.
+The idea here is to consider the point $x :\equiv \mathsf{inl}
+(\mathsf{unit})$ (that represents the first point on each type $[n+1]$
+and $[m+1]$) and its image by the function $f$. Then, we construct a
+function $h : [n + 1] - \{x\} \to [ m + 1 ] - \{ x\}$ which acts as
+the restriction of the given function $f$. Because $f$ is injective,
+and any restriction of it is also injective, $h$ is injective. Now, we
+do induction on $n$, and the induction hypothesis says any function $g
+: [n] → [m]$, $g$ is not injective.
 
 \begin{figure}[!ht]
 \begin{center}
@@ -1621,13 +1627,13 @@ induction hypothesis says any function $g : [n] → [m]$, $g$ is not injective.
 \label{diagram}
 \end{figure}
 
-But with $h$ we can construct an injective function from $[n] \to [m]$ as
-follows. Recall the equivalence functions given by \Cref{equivalence-e}. By
-composing $h$ with those functions, as it is stated in the diagram showed
-above, we get the function $g$. Since composition of injective functions
-yields an injective function (see \Cref{e-gives-injective-functions}),
-therefore, $g$ is injective. As we expect by applying the induction
-hypothesis, we get the absurd.
+But with $h$ we can construct an injective function from $[n] \to [m]$
+as follows. Recall the equivalence functions given by
+\Cref{equivalence-e}. By composing $h$ with those functions, as it is
+stated in the diagram showed above, we get the function $g$. Since
+composition of injective functions yields an injective function (see
+\Cref{e-gives-injective-functions}), therefore, $g$ is injective. As
+we expect by applying the induction hypothesis, we get the absurd.
 
 The \Agda\ term for this proof is the following.
 
@@ -1769,12 +1775,12 @@ The \Agda\ term for this proof is the following.
 \>[4][@{}l@{\AgdaIndent{0}}]%
 \>[6]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{pair=}%
-\>[1119I]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
+\>[1120I]\AgdaSymbol{(}\AgdaBound{f-is-inj}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{ap}\AgdaSpace{}%
 \AgdaField{π₁}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[1119I]%
+\>[.][@{}l@{}]\<[1120I]%
 \>[14]\AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaFunction{pi-is-prop}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
@@ -1862,12 +1868,14 @@ For any $n, m : ℕ$, if $[n] \simeq [m]$ then $n ≡ m$.
 
 \begin{proof}
 
-By decidebility of natural numbers, we get an answer whether $n$ is equal to $m$ or not.
-If so, we are done. Otherwise, given the equivalence, $e : [n] ≃ [m]$, we consider the
-underlined function $f : [n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$
-or $m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not injective when it
-really is ($f$ is an equivalence). Therefore, from this absurd, the theorem follows.
-A similar argument is used when $m >n$ with the function $g$.
+By decidability of natural numbers, we get an answer whether $n$ is
+equal to $m$ or not. If so, we are done. Otherwise, given the
+equivalence, $e : [n] ≃ [m]$, we consider the underlined function $f :
+[n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$ or
+$m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not
+injective when it really is ($f$ is an equivalence). Therefore, from
+this absurd, the theorem follows. A similar argument is used when $m
+>n$ with the function $g$.
 
 \end{proof}
 

@@ -1,8 +1,8 @@
 \documentclass[11pt, a4paper, oneside]{amsart}
 
 \title{The Pigeonhole Principle}
-\date{Last updated : \today}
-\author{Jonathan Prieto-Cubides}
+\date{2019/08/02. Last revision: \today}
+\author{Jonathan Cubides}
 
 \input{macros.tex}
 \usepackage{latex/agda}
@@ -13,46 +13,47 @@
 
 \begin{abstract}
 There are many formulations of the so-called Pigeonhole principle,
-some of them proved in constructive mathematics and formalized
-in some proof-assistants. In this work, we show one these formulations
-proved in the context of Univalent Type theory and
-formalized in the proof-assistant Agda.
+some of them proved in constructive mathematics and formalized in some
+proof-assistants. In this work, we show one these formulations proved
+in the context of Univalent Type theory and formalized in the
+proof-assistant Agda.
 \end{abstract}
 
 \section{Introduction}
 
-The pigeonhole principle says that \emph{if you put $n$ pigeons in
-$m$ holes, with $m < n$, then at least one hole has more
-than one pigeon in it.
-}\\
+The pigeonhole principle says that \emph{if you put $n$ pigeons in $m$
+holes, with $m < n$, then at least one hole has more than one pigeon
+in it.}\\
 
 In~\cite{symmetrybook} the authors give the following formulation
-(\Cref{lem:PHP}) of the Pigeonhole Principle joint with a constructive proof
-that it holds. The proof can be found formalized in \texttt{Coq}\footnote{In
-the \texttt{Coq} standard library
+(\Cref{lem:PHP}) of the Pigeonhole Principle joint with a constructive
+proof that it holds. The proof can be found formalized in
+\texttt{Coq}\footnote{In the \texttt{Coq} standard library
 \url{https://coq.inria.fr/library/Coq.Sets.Image.html}.}.
 
 \begin{theorem}[Lemma 2.15.6 in \cite{symmetrybook}]\label{lem:PHP}
-For all $N:ℕ$ and $f:ℕ\to ℕ$ such that $f(n)<N$
-for all $n<N+1$, there exist $m < n < N+1$ such that $f(n)=f(m)$.
-\end{theorem}
-The function $f$ above intends to maps the number of a pigeon in $\{0\cdots n−1\}$ to
-the number of its hole in $\{0\cdots m−1\}$.
-
-In this work, we consider an equivalent formulation in \Cref{pigeon-theorem},
-which can be seen as a generalization of \Cref{lem:PHP}. The formal statement
-says, there is no injective function that can go from a finite set to a smaller
-one. We denote the finite set of $n$ elements with $[n]$.
-
-\begin{theorem}[Pigeonhole Theorem]\label{pigeon-theorem}
-For any $n,\, m : ℕ$ when $m < n$,  a function $f : [ n ] \to [ m ]$
-can not be injective.
+For all $N:ℕ$ and $f:ℕ\to ℕ$ such that $f(n)<N$ for all $n<N+1$, there
+exist $m < n < N+1$ such that $f(n)=f(m)$.
 \end{theorem}
 
-Another similar formulation can be stated when instead of finite sets, we
-consider for any function, the cardinality of its domain and its image. We
-give the following formulations that follow the same fashion of
-\Cref{pigeon-theorem}.
+The function $f$ above intends to map the number of a pigeon in
+$\{0\cdots n−1\}$ to the number of its hole in $\{0\cdots m−1\}$.
+
+In this work, we consider an equivalent formulation in
+\Cref{pigeon-theorem}, which can be seen as a generalization of
+\Cref{lem:PHP}. The formal statement says, there is no injective
+function that can go from a finite set to a smaller one. We denote the
+finite set of $n$ elements with $[n]$.
+
+\begin{theorem}[Pigeonhole Theorem]\label{pigeon-theorem} For any
+$n,\, m : ℕ$ when $m < n$,  a function $f : [ n ] \to [ m ]$ can not
+be injective.
+\end{theorem}
+
+Another similar formulation can be stated when instead of finite sets,
+we consider for any function, the cardinality of its domain and its
+image. We give the following formulations that follow the same fashion
+of \Cref{pigeon-theorem}.
 
 For any $n : ℕ$, $f : [n] \to [n]$.
 \begin{itemize}
@@ -64,10 +65,11 @@ For any $n : ℕ$, $f : [n] \to [n]$.
 
 \subsection{Agda formalization}
 
-To check the proof in~\Cref{proof-pigeon-theorem} of \Cref{pigeon-theorem}, we
-use \texttt{Agda v2.6.0} without the \emph{Axiom K} to be consistent with
-Univalent mathematics. We also import a library to work with Homotopy Type
-Theory called \texttt{MiniHoTT}\footnote{Available on
+To check the proof in~\Cref{proof-pigeon-theorem} of
+\Cref{pigeon-theorem}, we use \texttt{Agda v2.6.0} without the
+\emph{Axiom K} to be consistent with Univalent mathematics. We also
+import a library to work with Homotopy Type Theory called
+\texttt{MiniHoTT}\footnote{Available on
 \url{http://jonaprieto.github.io/mini-hott}.} that includes some type
 definitions and theorems we need.
 
@@ -77,29 +79,30 @@ open import MiniHoTT
 \end{code}
 
 \begin{code}[hide]
-  hiding (Fin)
 module _ {ℓ : Level} where
   open ℕ-ordering ℓ
+  open import NaturalType
   ⟦_⟧ = ⟦_⟧₂ {ℓ}
 \end{code}
 
 \subsection{Types}
 
-We assume the reader is familiar with type theory notation as in Book HoTT
-\cite{hottbook} and with the basic \Agda\, syntax. For any type $A : \Type$,
-we define in~\Cref{eq:minus} the type $A - \{x\}$ as the type\footnote{We
-denote this symbol, minus, as  double-back-slashes in \Agda.} of elements of
-which are different with $x$. We will use this type to talk about the finite
-set $[n]$ without a point $x$, i.e., $[n] - \{ x\}$. The finite set of $n$
-elements in \texttt{Agda} is denoted by \texttt{⟦ n ⟧}. We are using for
-finite sets the definition that says $[n + 1] :\equiv 𝟙 + [n]$ and $[0]
-:\equiv 𝟘$. Propositional equality is denoted by ($\equiv$) instead of $(=)$.
-The type $ℕ$ for natural numbers has two constructors \texttt{zero}, and
-\texttt{succ}. The coproduct of types $A$ and $B$ is denoted by $A+B$ and it
-has two introduction rules named \texttt{inr}, and \texttt{inl}. We use the
-direct composition of functions also called \emph{diagramatic} composition,
-denoted in \texttt{Agda} by (\texttt{f :> g}) for $f : A \to B$ and $g : B \to
-C$, for types $A,B,$ and $C$.
+We assume the reader is familiar with type theory notation as in Book
+HoTT \cite{hottbook} and with the basic \Agda\, syntax. For any type
+$A : \Type$, we define in~\Cref{eq:minus} the type $A - \{x\}$ as the
+type\footnote{We denote this symbol, minus, as  double-back-slashes in
+\Agda.} of elements of which are different with $x$. We will use this
+type to talk about the finite set $[n]$ without a point $x$, i.e.,
+$[n] - \{ x\}$. The finite set of $n$ elements in \texttt{Agda} is
+denoted by \texttt{⟦ n ⟧}. We are using for finite sets the definition
+that says $[n + 1] :\equiv 𝟙 + [n]$ and $[0] :\equiv 𝟘$.
+Propositional equality is denoted by ($\equiv$) instead of $(=)$. The
+type $ℕ$ for natural numbers has two constructors \texttt{zero}, and
+\texttt{succ}. The coproduct of types $A$ and $B$ is denoted by $A+B$
+and it has two introduction rules named \texttt{inr}, and
+\texttt{inl}. We use the direct composition of functions also called
+\emph{diagramatic} composition, denoted in \texttt{Agda} by (\texttt{f
+:> g}) for $f : A \to B$ and $g : B \to C$, for types $A,B,$ and $C$.
 
 \begin{equation}\label{eq:minus}
 A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
@@ -112,15 +115,16 @@ A - \{x\} :\equiv \sum_{a : A} \, (a ≡ x) → \bot.
 
 \section{A proof of \Cref{pigeon-theorem}}
 
-We first need to show there exists an equivalence between two (finite) types
-that differs only by one point. So we define the following (recursive)
-functions \texttt{e→} and \texttt{e←}.
+We first need to show there exists an equivalence between two (finite)
+types that differs only by one point. So we define the following
+(recursive) functions \texttt{e→} and \texttt{e←}.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{removing-one-point-from-finite-set.pdf}
-\caption{Construction of the equivalence $e$ in (\Cref{equivalence-e}).
-The directions of the arrows (forward and backward) correspond to the functions
-in \Cref{definition-e-fun} and \Cref{definition-e-inv}, respectively.}
+\caption{Construction of the equivalence $e$ in
+(\Cref{equivalence-e}). The directions of the arrows (forward and
+backward) correspond to the functions in \Cref{definition-e-fun} and
+\Cref{definition-e-inv}, respectively.}
 \end{figure}
 
 \begin{definition}\label{definition-e-fun}
@@ -268,7 +272,7 @@ The \texttt{e→} and \texttt{e←} functions are both injective functions.
 \begin{proof} By the equivalence in~\Cref{equivalence-e}, we can get a
 (proper) bijection since the corresponding types of that equivalence are in
 fact (homotopy) sets. Bijections are injections, so the result follows. For
-the function \texttt{e←} repeat the argument but we the symmetry of the
+the function \texttt{e←} repeat the argument, but for the symmetry of the
 aforementioned equivalence. \end{proof}
 
 \begin{code}[hide]
@@ -323,13 +327,14 @@ aforementioned equivalence. \end{proof}
 
 \begin{proof}[Proof of \Cref{pigeon-theorem}]\label{proof-pigeon-theorem}
 
-The idea here is basically consider the point $x :\equiv \mathsf{inl}
-(\mathsf{unit})$ (that represents the first point on each type $[n+1]$ and
-$[m+1]$) and its image by the function $f$. Then, we construct a function $h :
-[n + 1] - \{x\} \to [ m + 1 ] - \{ x\}$ which acts as the restriction of the
-given function $f$. Because $f$ is injective, and any restriction of it is
-also injective, $h$ is injective. Now, we do induction on $n$, and the
-induction hypothesis says any function $g : [n] → [m]$, $g$ is not injective.
+The idea here is to consider the point $x :\equiv \mathsf{inl}
+(\mathsf{unit})$ (that represents the first point on each type $[n+1]$
+and $[m+1]$) and its image by the function $f$. Then, we construct a
+function $h : [n + 1] - \{x\} \to [ m + 1 ] - \{ x\}$ which acts as
+the restriction of the given function $f$. Because $f$ is injective,
+and any restriction of it is also injective, $h$ is injective. Now, we
+do induction on $n$, and the induction hypothesis says any function $g
+: [n] → [m]$, $g$ is not injective.
 
 \begin{figure}[!ht]
 \begin{center}
@@ -342,13 +347,13 @@ induction hypothesis says any function $g : [n] → [m]$, $g$ is not injective.
 \label{diagram}
 \end{figure}
 
-But with $h$ we can construct an injective function from $[n] \to [m]$ as
-follows. Recall the equivalence functions given by \Cref{equivalence-e}. By
-composing $h$ with those functions, as it is stated in the diagram showed
-above, we get the function $g$. Since composition of injective functions
-yields an injective function (see \Cref{e-gives-injective-functions}),
-therefore, $g$ is injective. As we expect by applying the induction
-hypothesis, we get the absurd.
+But with $h$ we can construct an injective function from $[n] \to [m]$
+as follows. Recall the equivalence functions given by
+\Cref{equivalence-e}. By composing $h$ with those functions, as it is
+stated in the diagram showed above, we get the function $g$. Since
+composition of injective functions yields an injective function (see
+\Cref{e-gives-injective-functions}), therefore, $g$ is injective. As
+we expect by applying the induction hypothesis, we get the absurd.
 
 The \Agda\ term for this proof is the following.
 
@@ -387,12 +392,14 @@ For any $n, m : ℕ$, if $[n] \simeq [m]$ then $n ≡ m$.
 
 \begin{proof}
 
-By decidebility of natural numbers, we get an answer whether $n$ is equal to $m$ or not.
-If so, we are done. Otherwise, given the equivalence, $e : [n] ≃ [m]$, we consider the
-underlined function $f : [n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$
-or $m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not injective when it
-really is ($f$ is an equivalence). Therefore, from this absurd, the theorem follows.
-A similar argument is used when $m >n$ with the function $g$.
+By decidability of natural numbers, we get an answer whether $n$ is
+equal to $m$ or not. If so, we are done. Otherwise, given the
+equivalence, $e : [n] ≃ [m]$, we consider the underlined function $f :
+[n] → [m]$ and its inverse $g$. Now, we can also ask us if $m < n$ or
+$m > n$. If the former occurs, by \Cref{pigeon-theorem}, $f$ is not
+injective when it really is ($f$ is an equivalence). Therefore, from
+this absurd, the theorem follows. A similar argument is used when $m
+>n$ with the function $g$.
 
 \end{proof}
 
